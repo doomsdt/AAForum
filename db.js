@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var dbURI = "mongodb://user1:doomsdt@ds023074.mlab.com:23074/heroku_pkb33wxt";
+var dbURI = "mongodb://user:aaf123@ds023654.mlab.com:23654/heroku_qb72gbhx";
 
 exports.connect = function(){
 
