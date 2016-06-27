@@ -1,0 +1,59 @@
+<!doctype html>
+<html ng-app="AAForum">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.js"></script>
+		<script src="//code.jquery.com/jquery-1.10.1.min.js"></script>	
+		<script type="text/javascript" src="../js/aaforum.js"></script>
+		<script type="text/javascript" src="../js/dirPagination.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../stylesheets/style.css">
+	</head>
+	
+	<body>
+		<header>
+			<h1>AA Forum</h1>		
+		</header>
+		<section ng-controller="forumController as forumC">
+			<div class="col-md-8 col-sm-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<b class="title">{{forum.title}}</b>
+						<div class="postTag">
+							<cite class="userName">- {{forum.hostName}}</cite><br/>
+							<span class="dateTime">{{forum.sDateTime | date:'medium'}}</span>
+						</div>
+						
+					</div>
+					<div class="panel-body"><h3>{{forum.contents}}</h3></div>
+												
+				</div>
+				
+				<form role="form" name="postComment" class="submitForm" ng-submit="forumC.postComment()">
+					<div class="form-group">
+						<label for="commentBody">Comment :</label>
+						<textarea id="commentBody" name="body" ng-model="comment.body" class="form-control"></textarea>
+					</div>
+					<cite>- {{comment.commentor}}</cite>
+					<input type="submit" class="btn btn-primary pull-right" value="Post"/>
+				</form>
+				
+				<div class="list-group">
+					<div ng-repeat="comment in forum.comments" class="container-fluid list-group-item">
+						<div>
+							{{comment.body}}
+							<div class="postTag">
+								<cite class="userName">- {{comment.commentor}}</cite><br/>
+								<span class="dateTime">{{comment.postedOn | date:'medium'}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+	</body>
+
+</html>
