@@ -54,6 +54,8 @@
 	app.controller('userController', ['$scope','$http','$cookies',function($scope,$http,$cookies){
 		
 		$scope.registeringUser = {};
+		if(!($cookies.getObject('currentUser').userID))
+			$cookies.putObject('currentUser',{userID:"guest"});
 		
 		$scope.loginUser = $cookies.getObject('currentUser');
 		if($scope.loginUser.userID == "guest")
