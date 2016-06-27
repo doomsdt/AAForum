@@ -6,7 +6,7 @@ var forumCnt = mongoose.model('forumCnt',{idx:Number});
 
 //Creates new forum.
 //Give auto-increment number to forum.
-exports.create = function(req,res){C
+exports.create = function(req,res){
 	forumCnt.findOneAndUpdate(
 			{id:'forumCnt'},
 			{$inc:{idx:1}},
