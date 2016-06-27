@@ -1,13 +1,12 @@
-/**
- * http://usejsdoc.org/
- */
-var Forum = require('../models/forums.js');
-var mongoose = require('mongoose');
 
+var mongoose = require('mongoose');
+var Forum = require('../models/forums.js');
 var forumCnt = mongoose.model('forumCnt',{idx:Number});
 
+
+//Creates new forum.
+//Give auto-increment number to forum.
 exports.create = function(req,res){
-	
 	forumCnt.findOneAndUpdate(
 			{id:'forumCnt'},
 			{$inc:{idx:1}},
@@ -17,28 +16,32 @@ exports.create = function(req,res){
 		forum.number = data.idx;
 		forum.save();
 	});
-	res.send("created");
 }
+//-----------------------------------
 
+//Find all forums and return sorted.
 exports.list = function(req,res){
 	Forum.find({}).sort({sDateTime:-1}).exec(function(err, docs){
 		res.status(200).json(docs);
 	});
 }
+//---------------------------------
 
+//Get a forum by their given number.
 exports.read = function(req,res){
 	Forum.find({number:req.params.id},function(err, docs){
 		res.status(200).json(docs[0]);
-
 	});
 }
+//---------------------------------
 
+//Push comment to forum comments array.
 exports.comment = function(req,res){
-	console.log(req.body.comment);
 	Forum.update(
 		{number:req.params.id},
-		{$push:{comments : req.body.comment}},function(err){
-			
+		{$addToSet:{comments : req.body.comment}},function(err){
+			console.log('Error')
 		}
 	);
 }
+//-------------------------------------

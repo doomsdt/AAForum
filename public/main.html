@@ -14,19 +14,22 @@
 	
 	<body ng-controller="userController as userC">
 		<div ng-controller="listController as listC">
-			<header class="col-sm-9">
-			
+		
+		
+			<header class="col-sm-9">			
 				<div class="container-fluid">
 					<h1 class="col-sm-6">AA Forum</h1>	
 					<button ng-show="loggedin" data-toggle="collapse" data-target="#forumForm" class="btn btn-danger newForum">New Forum</button><br/>
-				</div>
-				
-				
+				</div>			
 			</header>
+			
+			
 			<section>
 				<div class="jumbotron container col-sm-9">
-					<div id="forumForm" class="collapse submitForm">
-					
+				
+				
+					<!-- forumForm : Collapsable form to creating new forum -->					
+					<div id="forumForm" class="collapse submitForm">				
 						<form role="form" name="createForm" ng-submit="createForum();">
 							<div class="form-group">
 								<label for="forumTitle">Title :</label>
@@ -38,12 +41,17 @@
 							</div>
 							<cite>-{{loginUser.userID}}</cite>
 							<input type="submit" class="btn btn-primary pull-right" value="Open Forum!" data-toggle="collapse" data-target="#forumForm"/>
-						</form>
-						
-					</div>
+						</form>		
+					</div>		
+					<!-- // forumForm  -->
+					
+					
+					<!-- forum list -->
 					<div class='list-group'>
 						<div>					
 							<a dir-paginate="forum in forums | filter:q | itemsPerPage:10" ng-href="./forums/{{forum.number}}" class="list-group-item">
+								
+								<!-- format of a forum title -->
 								<div>
 									<blockquote class="title">
 										# {{forum.number}} | 
@@ -54,20 +62,30 @@
 										</div>		 
 									</blockquote>
 								</div>
+								<!-- // -->
+								
 							</a>						 
 						</div>
 						<div class="paginate">
 							<dir-pagination-controls boundary-links="true" template-url="./views/dirPagination.tpl.html"></dir-pagination-controls>
 						</div>
 					</div>
+					<!-- // forum list -->
+					
+					
 				</div>
 			</section>
 		</div>
 		
 		
 		<aside class="col-sm-3">
+		
+		
+			<!-- login & sign form -->
 			<div ng-hide="loggedin">
 				<span><b id="guestInfo">You are Guest now.</b></span>
+				
+				<!-- login form -->
 				<form role="form" ng-submit="login(loginId,loginPw)" id="loginForm">
 					<div class="loginInput">
 						<input class="form-control" ng-model="loginId" type="text" placeholder="ID" maxlength=10 required/>
@@ -77,60 +95,90 @@
 						<input class="btn btn-primary containedButton" type="submit" value="Login" />
 					</div>	
 				</form>
+				<!-- // login form -->
+				
+				<!-- sign in form -->
 				<div class="loginInput"><b>Be our member!</b></div>
 				<div class="signinBtnContainer">
 					<input type = 'button' class='btn btn-primary containedButton' data-toggle='modal' data-target='#signIn' value='Sign in'>
 				</div>
+				<!-- // sign in form -->
+				
 			</div>
+			<!-- // login & sign form -->
 			
+			
+			<!-- user info & log out -->
 			<div ng-show="loggedin">
 				<span><b id="userInfo">Hi, {{loginUser.userID}}</b></span><br/>
 				<input type="button" ng-click="logout()" class="btn btn-primary" value="Logout"/>
 			</div>
+			<!-- // user info & log out -->
 				
-				
-				<div id="signIn" class="modal fade" role="dialog">
-				    <div class="modal-dialog modal-md">		    
-				      <!-- Modal content-->
-				      <div class="modal-content">
-				        <div class="modal-header">	
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h2>Be a member of AAForum!</h2>
-				        </div>
-				        <div class="modal-body">				        
-							<form ng-submit="signInForm.$valid && signIn()" name="signInForm" class="form-horizontal" novalidate>
-		
-								<div class="form-group">
-									<label class="control-label col-sm-2" for="signId">ID:</label>
-									<div class="col-sm-6">
-										<input ng-model="registeringUser.userID" type="text" class="form-control" id="signId" ng-maxlength=10 required />
-									</div>
-									<div class="form-group">
-										<input ng-model="checkboxModel.uniqueness" ng-click="isUnique()" type="checkbox" id="uniqueness" />
-										<label for="uniqueness" id="checkUniqueness">Check Uniqueness</label>
-										<b><label for="uniqueness" id="notifyUniqueness"></label></b>
-										<span ng-show="checkboxModel.uniqueness==true" class="valid"><b>Valid ID</b></span>
-										<span ng-show="checkboxModel.existing==true" class="error"><b>Already Existing!</b></span>
-									</div>
+			
+			<!-- Modal : sign in form -->
+			<div id="signIn" class="modal fade" role="dialog">
+			    <div class="modal-dialog modal-md">		
+			        
+			      <!-- Modal content-->
+			      <div class="modal-content">
+			      
+			      	<!-- Modal header -->
+			        <div class="modal-header">	
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h2>Be a member of AAForum!</h2>
+			        </div>
+			        <!-- // Modal header -->
+			        
+			        <!-- Modal body -->
+			        <div class="modal-body">			
+			        
+			        	<!-- Sign in form -->	        
+						<form ng-submit="signInForm.$valid && signIn()" name="signInForm" class="form-horizontal" novalidate>
+	
+							<!-- ID and validation -->
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="signId">ID:</label>
+								<div class="col-sm-6">
+									<input ng-model="registeringUser.userID" type="text" class="form-control" id="signId" ng-maxlength=10 required />
 								</div>
 								<div class="form-group">
-									<label class="control-label col-sm-2" for="signPw">Password:</label>
-									<div class="col-sm-6">
-										<input ng-model="registeringUser.password" ng-minlength=5 maxlength=10 type="password" class="form-control" id="signPw" name="userPw" required/>
-									</div>
-									<span class="error " ng-show="signInForm.userPw.$error.minlength || signInForm.userPw.$error.required"><b>Allowed min length is 5</b></span>
-								</div>	
-								<div class="modal-footer">
-									<input type="submit" ng-disabled="signInForm.$invalid || checkboxModel.uniqueness==false" class="btn btn-primary pull-right" value="Register" />
+									<input ng-model="checkboxModel.uniqueness" ng-click="isUnique()" type="checkbox" id="uniqueness" />
+									<label for="uniqueness" id="checkUniqueness">Check Uniqueness</label>
+									<b><label for="uniqueness" id="notifyUniqueness"></label></b>
+									<span ng-show="checkboxModel.uniqueness==true" class="valid"><b>Valid ID</b></span>
+									<span ng-show="checkboxModel.existing==true" class="error"><b>Already Existing!</b></span>
 								</div>
-								
-							</form>
-				        </div>		
-				      </div>				      
-				    </div>
-				</div>			
-		</aside>
-		
-		
+							</div>
+							<!-- // ID and validation -->
+							
+							<!-- PW and validation -->
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="signPw">Password:</label>
+								<div class="col-sm-6">
+									<input ng-model="registeringUser.password" ng-minlength=5 maxlength=10 type="password" class="form-control" id="signPw" name="userPw" required/>
+								</div>
+								<span class="error " ng-show="signInForm.userPw.$error.minlength || signInForm.userPw.$error.required"><b>Allowed min length is 5</b></span>
+							</div>	
+							<!-- // PW and validation -->
+							
+							<!-- Modal footer -->
+							<div class="modal-footer">
+								<input type="submit" ng-disabled="signInForm.$invalid || checkboxModel.uniqueness==false" class="btn btn-primary pull-right" value="Register" />
+							</div>
+							<!-- Modal footer -->
+							
+						</form>
+						<!-- // Sign in form -->
+			        </div>		
+			        <!-- Modal body -->
+			        
+			      </div>				      
+			    </div>
+			</div>		
+			<!-- Modal : sign in form -->
+			
+				
+		</aside>	
 	</body>
 </html>

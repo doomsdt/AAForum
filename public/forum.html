@@ -18,19 +18,30 @@
 		</header>
 		<section ng-controller="forumController as forumC">
 			<div class="col-md-8 col-sm-8">
+			
+				
+				<!-- Panel : forum -->
 				<div class="panel panel-default">
+				
+					<!-- Panel heading : title -->
 					<div class="panel-heading">
 						<b class="title">{{forum.title}}</b>
 						<div class="postTag">
 							<cite class="userName">- {{forum.hostName}}</cite><br/>
 							<span class="dateTime">{{forum.sDateTime | date:'medium'}}</span>
-						</div>
-						
+						</div>					
 					</div>
-					<div class="panel-body"><h3>{{forum.contents}}</h3></div>
-												
+					<!-- Panel heading : title -->
+					
+					<!-- Panel body : contents -->
+					<div class="panel-body"><h3>{{forum.contents}}</h3></div>	
+					<!-- // Panel body : contents -->
+															
 				</div>
+				<!-- // Panel : forum -->
 				
+				
+				<!-- Comment form -->
 				<form role="form" name="postComment" class="submitForm" ng-submit="forumC.postComment()">
 					<div class="form-group">
 						<label for="commentBody">Comment :</label>
@@ -39,7 +50,10 @@
 					<cite>- {{comment.commentor}}</cite>
 					<input type="submit" class="btn btn-primary pull-right" value="Post"/>
 				</form>
+				<!-- // Comment form -->
 				
+				
+				<!-- Comment list -->
 				<div class="list-group">
 					<div ng-repeat="comment in forum.comments" class="container-fluid list-group-item">
 						<div>
@@ -51,6 +65,8 @@
 						</div>
 					</div>
 				</div>
+				<!-- // Comment list -->
+				
 			</div>
 		</section>
 		
